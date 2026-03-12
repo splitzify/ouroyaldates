@@ -1,45 +1,27 @@
 'use client'
 
-import { useEffect, useState, useCallback } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
-import { createClient } from '@/lib/supabase'
-import type { DatePlan, PlanStatus } from '@/lib/types'
-import { STATUS_LABELS, STATUS_COLORS } from '@/lib/types'
-import { Badge } from '@/components/ui/badge'
+import { usePlans } from '@/hooks/usePlans'
+import type { PlanStatus } from '@/types'
+import PlanCard from '@/components/features/plans/PlanCard'
+import PlanFilterTabs from '@/components/features/plans/PlanFilterTabs'
+import AnimatedContent from '@/components/bits/AnimatedContent'
 import { Button } from '@/components/ui/button'
-import { Plus, MapPin, Calendar, ChevronRight, Heart } from 'lucide-react'
+import { Heart, Plus } from 'lucide-react'
 
-const FILTERS: { label: string; value: PlanStatus | 'all' }[] = [
-  { label: 'All', value: 'all' },
-  { label: 'Wishlist', value: 'wishlist' },
-  { label: 'Planned', value: 'planned' },
-  { label: 'Done', value: 'done' },
-]
+type FilterValue = PlanStatus | 'all'
 
 export default function DashboardPage() {
-  const [plans, setPlans] = useState<DatePlan[]>([])
-  const [filter, setFilter] = useState<PlanStatus | 'all'>('all')
-  const [loading, setLoading] = useState(true)
+  const { plans, loading } = usePlans()
+  const [filter, setFilter] = useState<FilterValue>('all')
 
-  const fetchPlans = useCallback(async () => {
-    const supabase = createClient()
-    const { data } = await supabase
-      .from('date_plans')
-      .select('*, locations(id)')
-      .order('planned_date', { ascending: true, nullsFirst: false })
-    setPlans(data ?? [])
-    setLoading(false)
-  }, [])
-
-  useEffect(() => {
-    fetchPlans()
-    const supabase = createClient()
-    const channel = supabase
-      .channel('dashboard-plans')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'date_plans' }, fetchPlans)
-      .subscribe()
-    return () => { supabase.removeChannel(channel) }
-  }, [fetchPlans])
+  const counts: Record<FilterValue, number> = {
+    all:      plans.length,
+    wishlist: plans.filter(p => p.status === 'wishlist').length,
+    planned:  plans.filter(p => p.status === 'planned').length,
+    done:     plans.filter(p => p.status === 'done').length,
+  }
 
   const filtered = filter === 'all' ? plans : plans.filter(p => p.status === filter)
 
@@ -53,75 +35,41 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-5">
-      {/* Filter tabs */}
-      <div className="flex gap-2 flex-wrap">
-        {FILTERS.map(f => (
-          <button
-            key={f.value}
-            onClick={() => setFilter(f.value)}
-            className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
-              filter === f.value
-                ? 'bg-rose-500 text-white'
-                : 'bg-white text-gray-600 border hover:border-rose-300'
-            }`}
-          >
-            {f.label}
-          </button>
-        ))}
-      </div>
-
-      {/* Plan cards */}
-      {filtered.length === 0 ? (
-        <div className="text-center py-20 space-y-4">
-          <Heart className="w-12 h-12 text-rose-200 fill-rose-200 mx-auto" />
-          <p className="text-gray-500">No plans yet. Add your first date idea!</p>
-          <Button asChild className="bg-rose-500 hover:bg-rose-600">
-            <Link href="/plans/new">
-              <Plus className="w-4 h-4 mr-1" />
-              New plan
-            </Link>
-          </Button>
+      <AnimatedContent distance={20} direction="vertical" duration={0.5}>
+        <div className="flex items-end justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">Our dates</h1>
+            <p className="text-sm text-gray-400 mt-0.5">{plans.length} plan{plans.length !== 1 ? 's' : ''} together</p>
+          </div>
         </div>
+      </AnimatedContent>
+
+      <AnimatedContent distance={15} direction="vertical" duration={0.5} delay={0.05}>
+        <PlanFilterTabs active={filter} onChange={setFilter} counts={counts} />
+      </AnimatedContent>
+
+      {filtered.length === 0 ? (
+        <AnimatedContent distance={20} direction="vertical" duration={0.5} delay={0.1}>
+          <div className="text-center py-20 space-y-4">
+            <div className="w-16 h-16 bg-rose-50 rounded-full flex items-center justify-center mx-auto">
+              <Heart className="w-8 h-8 text-rose-300 fill-rose-200" />
+            </div>
+            <div>
+              <p className="font-medium text-gray-700">No plans yet</p>
+              <p className="text-sm text-gray-400 mt-0.5">Add your first date idea!</p>
+            </div>
+            <Button asChild className="btn-primary">
+              <Link href="/plans/new">
+                <Plus className="w-4 h-4 mr-1.5" />
+                New plan
+              </Link>
+            </Button>
+          </div>
+        </AnimatedContent>
       ) : (
         <div className="space-y-3">
-          {filtered.map(plan => (
-            <Link
-              key={plan.id}
-              href={`/plans/${plan.id}`}
-              className="block bg-white rounded-xl border hover:border-rose-300 hover:shadow-sm transition-all p-4"
-            >
-              <div className="flex items-start justify-between gap-3">
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1.5">
-                    <Badge className={`text-xs font-medium ${STATUS_COLORS[plan.status]}`} variant="outline">
-                      {STATUS_LABELS[plan.status]}
-                    </Badge>
-                  </div>
-                  <h3 className="font-semibold text-gray-900 truncate">{plan.title}</h3>
-                  {plan.description && (
-                    <p className="text-sm text-gray-500 mt-0.5 line-clamp-2">{plan.description}</p>
-                  )}
-                  <div className="flex items-center gap-3 mt-2 text-xs text-gray-400">
-                    {plan.planned_date && (
-                      <span className="flex items-center gap-1">
-                        <Calendar className="w-3 h-3" />
-                        {new Date(plan.planned_date + 'T00:00:00').toLocaleDateString('en-US', {
-                          month: 'short', day: 'numeric', year: 'numeric',
-                        })}
-                      </span>
-                    )}
-                    {(plan.locations as unknown as { id: string }[])?.length > 0 && (
-                      <span className="flex items-center gap-1">
-                        <MapPin className="w-3 h-3" />
-                        {(plan.locations as unknown as { id: string }[]).length} location
-                        {(plan.locations as unknown as { id: string }[]).length !== 1 ? 's' : ''}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <ChevronRight className="w-4 h-4 text-gray-300 flex-shrink-0 mt-1" />
-              </div>
-            </Link>
+          {filtered.map((plan, i) => (
+            <PlanCard key={plan.id} plan={plan} index={i} />
           ))}
         </div>
       )}

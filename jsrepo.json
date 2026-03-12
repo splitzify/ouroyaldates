@@ -1,0 +1,8 @@
+{
+  "repos": ["https://reactbits.dev/r"],
+  "includeTests": false,
+  "watermark": false,
+  "paths": {
+    "component": "components/bits"
+  }
+}
