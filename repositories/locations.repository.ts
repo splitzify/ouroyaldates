@@ -24,6 +24,18 @@ export const locationsRepository = {
     return data
   },
 
+  async update(id: string, input: Partial<{ name: string; url: string; notes: string | null; platform: string }>): Promise<Location> {
+    const supabase = createClient()
+    const { data, error } = await supabase
+      .from('locations')
+      .update(input)
+      .eq('id', id)
+      .select()
+      .single()
+    if (error) throw error
+    return data
+  },
+
   async delete(id: string): Promise<void> {
     const supabase = createClient()
     const { error } = await supabase

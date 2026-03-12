@@ -9,8 +9,11 @@ create table date_plans (
   title text not null,
   description text,
   planned_date date,
+  planned_time text,
   status plan_status not null default 'wishlist',
   created_by uuid references auth.users(id) on delete cascade not null,
+  creator_name text,
+  updated_by_name text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );

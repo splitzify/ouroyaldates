@@ -3,7 +3,9 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePlans } from '@/hooks/usePlans'
+import { useAuth } from '@/hooks/useAuth'
 import type { PlanStatus } from '@/types'
+import { getDisplayName } from '@/types'
 import PlanCard from '@/components/features/plans/PlanCard'
 import PlanFilterTabs from '@/components/features/plans/PlanFilterTabs'
 import AnimatedContent from '@/components/bits/AnimatedContent'
@@ -14,7 +16,11 @@ type FilterValue = PlanStatus | 'all'
 
 export default function DashboardPage() {
   const { plans, loading } = usePlans()
+  const { user } = useAuth()
   const [filter, setFilter] = useState<FilterValue>('all')
+
+  const rawName     = user?.user_metadata?.display_name || user?.email || ''
+  const displayName = rawName ? getDisplayName(rawName) : null
 
   const counts: Record<FilterValue, number> = {
     all:      plans.length,
@@ -38,6 +44,9 @@ export default function DashboardPage() {
       <AnimatedContent distance={20} direction="vertical" duration={0.5}>
         <div className="flex items-end justify-between">
           <div>
+            {displayName && (
+              <p className="text-sm text-rose-400 font-medium mb-0.5">Hi, {displayName} 💕</p>
+            )}
             <h1 className="text-2xl font-bold text-gray-900">Our dates</h1>
             <p className="text-sm text-gray-400 mt-0.5">{plans.length} plan{plans.length !== 1 ? 's' : ''} together</p>
           </div>

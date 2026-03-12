@@ -22,6 +22,18 @@ export const locationsService = {
     })
   },
 
+  async update(id: string, input: { name: string; url: string; notes?: string }): Promise<Location> {
+    if (!input.name.trim()) throw new Error('Name is required')
+    if (!input.url.trim())  throw new Error('URL is required')
+    const platform = detectPlatform(input.url)
+    return locationsRepository.update(id, {
+      name:     input.name.trim(),
+      url:      input.url.trim(),
+      notes:    input.notes?.trim() || null,
+      platform,
+    })
+  },
+
   async remove(id: string): Promise<void> {
     return locationsRepository.delete(id)
   },

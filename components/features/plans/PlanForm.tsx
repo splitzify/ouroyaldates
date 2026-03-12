@@ -12,7 +12,7 @@ import { Check, X, Trash2 } from 'lucide-react'
 
 interface Props {
   plan?: DatePlan
-  onSave:   (data: { title: string; description: string; planned_date: string; status: PlanStatus }) => Promise<void>
+  onSave:   (data: { title: string; description: string; planned_date: string; planned_time: string; status: PlanStatus }) => Promise<void>
   onCancel?: () => void
   onDelete?: () => Promise<void>
   submitLabel?: string
@@ -22,6 +22,7 @@ export default function PlanForm({ plan, onSave, onCancel, onDelete, submitLabel
   const [title, setTitle]       = useState(plan?.title ?? '')
   const [description, setDesc]  = useState(plan?.description ?? '')
   const [date, setDate]         = useState(plan?.planned_date ?? '')
+  const [time, setTime]         = useState(plan?.planned_time ?? '')
   const [status, setStatus]     = useState<PlanStatus>(plan?.status ?? 'wishlist')
   const [error, setError]       = useState('')
   const [loading, setLoading]   = useState(false)
@@ -31,7 +32,7 @@ export default function PlanForm({ plan, onSave, onCancel, onDelete, submitLabel
     setError('')
     setLoading(true)
     try {
-      await onSave({ title, description, planned_date: date, status })
+      await onSave({ title, description, planned_date: date, planned_time: time, status })
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong')
       setLoading(false)
@@ -60,10 +61,10 @@ export default function PlanForm({ plan, onSave, onCancel, onDelete, submitLabel
 
       <AnimatedContent distance={20} direction="vertical" duration={0.4} delay={0.05}>
         <div className="space-y-1.5">
-          <Label htmlFor="description" className="label-style">Vibe / description</Label>
+          <Label htmlFor="description" className="label-style">Description</Label>
           <Textarea
             id="description"
-            placeholder="What's the vibe? Any ideas?"
+            placeholder="What are you thinking?"
             value={description}
             onChange={e => setDesc(e.target.value)}
             className="input-style resize-none"
@@ -85,18 +86,31 @@ export default function PlanForm({ plan, onSave, onCancel, onDelete, submitLabel
             />
           </div>
           <div className="space-y-1.5">
-            <Label className="label-style">Status</Label>
-            <Select value={status} onValueChange={v => setStatus(v as PlanStatus)}>
-              <SelectTrigger className="input-style">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="wishlist">💜 Wishlist</SelectItem>
-                <SelectItem value="planned">💙 Planned</SelectItem>
-                <SelectItem value="done">💚 Done</SelectItem>
-              </SelectContent>
-            </Select>
+            <Label htmlFor="time" className="label-style">Time</Label>
+            <Input
+              id="time"
+              type="time"
+              value={time}
+              onChange={e => setTime(e.target.value)}
+              className="input-style"
+            />
           </div>
+        </div>
+      </AnimatedContent>
+
+      <AnimatedContent distance={20} direction="vertical" duration={0.4} delay={0.12}>
+        <div className="space-y-1.5">
+          <Label className="label-style">Status</Label>
+          <Select value={status} onValueChange={v => setStatus(v as PlanStatus)}>
+            <SelectTrigger className="input-style">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="wishlist">💜 Wishlist</SelectItem>
+              <SelectItem value="planned">💙 Planned</SelectItem>
+              <SelectItem value="done">💚 Done</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </AnimatedContent>
 

@@ -3,13 +3,17 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useAuth } from '@/hooks/useAuth'
+import { getDisplayName } from '@/types'
 import { Button } from '@/components/ui/button'
 import { Heart, Plus, LogOut } from 'lucide-react'
 
 export default function AppNav() {
-  const { signOut } = useAuth()
+  const { user, signOut } = useAuth()
   const pathname = usePathname()
   const isHome = pathname === '/dashboard'
+
+  const rawName     = user?.user_metadata?.display_name || user?.email || ''
+  const displayName = rawName ? getDisplayName(rawName) : null
 
   return (
     <header className="bg-white/80 backdrop-blur-md border-b border-rose-100 sticky top-0 z-10">
@@ -20,6 +24,9 @@ export default function AppNav() {
         </Link>
 
         <div className="flex items-center gap-2">
+          {displayName && (
+            <span className="hidden sm:block text-xs text-gray-400 font-medium px-1">{displayName}</span>
+          )}
           {isHome && (
             <Button asChild size="sm" className="btn-primary gap-1.5 h-8 px-3 text-xs font-semibold">
               <Link href="/plans/new">

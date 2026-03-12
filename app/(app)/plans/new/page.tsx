@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { plansService } from '@/services/plans.service'
 import { createClient } from '@/lib/supabase'
 import type { PlanStatus } from '@/types'
+import { getDisplayName } from '@/types'
 import PlanForm from '@/components/features/plans/PlanForm'
 import AnimatedContent from '@/components/bits/AnimatedContent'
 import { Button } from '@/components/ui/button'
@@ -13,15 +14,19 @@ import { ArrowLeft, Sparkles } from 'lucide-react'
 export default function NewPlanPage() {
   const router = useRouter()
 
-  async function handleSave(data: { title: string; description: string; planned_date: string; status: PlanStatus }) {
+  async function handleSave(data: { title: string; description: string; planned_date: string; planned_time: string; status: PlanStatus }) {
     const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) { router.push('/login'); return }
+    const rawName     = user.user_metadata?.display_name || user.email || ''
+    const creatorName = getDisplayName(rawName)
     const plan = await plansService.create(user.id, {
       title:        data.title,
       description:  data.description || undefined,
       planned_date: data.planned_date || undefined,
+      planned_time: data.planned_time || undefined,
       status:       data.status,
+      creator_name: creatorName,
     })
     router.push(`/plans/${plan.id}`)
   }

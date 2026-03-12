@@ -11,6 +11,10 @@ export const metadata: Metadata = {
   title: "Our Date Planner",
   description: "Plan beautiful dates together",
   manifest: "/manifest.json",
+  icons: {
+    apple: "/appicon.jpeg",
+    icon:  "/appicon.jpeg",
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",

@@ -1,6 +1,6 @@
 import type { Location } from '@/types'
 import { PLATFORM_LABELS } from '@/types'
-import { MapPin, Instagram, Music2, Star, Link as LinkIcon, ExternalLink, Trash2 } from 'lucide-react'
+import { MapPin, Instagram, Music2, Star, Link as LinkIcon, ExternalLink, Trash2, Pencil } from 'lucide-react'
 
 const PLATFORM_ICONS: Record<string, React.ReactNode> = {
   maps:      <MapPin      className="w-4 h-4 text-emerald-500" />,
@@ -21,10 +21,11 @@ const PLATFORM_BG: Record<string, string> = {
 interface Props {
   location:    Location
   onDelete:    (id: string) => void
+  onEdit:      (location: Location) => void
   isSelected?: boolean
 }
 
-export default function LocationCard({ location, onDelete, isSelected }: Props) {
+export default function LocationCard({ location, onDelete, onEdit, isSelected }: Props) {
   return (
     <div className={`
       flex items-start gap-3 p-4 rounded-xl border transition-all duration-150
@@ -56,12 +57,22 @@ export default function LocationCard({ location, onDelete, isSelected }: Props) 
           Open <ExternalLink className="w-3 h-3" />
         </a>
       </div>
-      <button
-        onClick={e => { e.stopPropagation(); onDelete(location.id) }}
-        className="text-gray-200 hover:text-red-400 transition-colors flex-shrink-0 p-1 -mr-1 rounded-lg hover:bg-red-50"
-      >
-        <Trash2 className="w-3.5 h-3.5" />
-      </button>
+      <div className="flex items-center gap-1 flex-shrink-0">
+        <button
+          onClick={e => { e.stopPropagation(); onEdit(location) }}
+          title="Edit spot"
+          className="text-gray-200 hover:text-violet-400 transition-colors p-1 rounded-lg hover:bg-violet-50"
+        >
+          <Pencil className="w-3.5 h-3.5" />
+        </button>
+        <button
+          onClick={e => { e.stopPropagation(); onDelete(location.id) }}
+          title="Delete spot"
+          className="text-gray-200 hover:text-red-400 transition-colors p-1 rounded-lg hover:bg-red-50"
+        >
+          <Trash2 className="w-3.5 h-3.5" />
+        </button>
+      </div>
     </div>
   )
 }

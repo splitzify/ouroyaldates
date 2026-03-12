@@ -3,16 +3,19 @@
 import { useState } from 'react'
 import type { Location } from '@/types'
 import LocationCard from './LocationCard'
+import EditLocationDialog from './EditLocationDialog'
 import { motion, AnimatePresence } from 'motion/react'
 import { MapPin } from 'lucide-react'
 
 interface Props {
   locations: Location[]
   onDelete:  (id: string) => void
+  onUpdate:  (id: string, data: { name: string; url: string; notes?: string }) => Promise<void>
 }
 
-export default function LocationList({ locations, onDelete }: Props) {
+export default function LocationList({ locations, onDelete, onUpdate }: Props) {
   const [selectedIndex, setSelectedIndex] = useState(-1)
+  const [editingLoc, setEditingLoc]       = useState<Location | null>(null)
 
   if (locations.length === 0) {
     return (
@@ -29,26 +32,36 @@ export default function LocationList({ locations, onDelete }: Props) {
   }
 
   return (
-    <div className="space-y-2">
-      <AnimatePresence initial={false}>
-        {locations.map((loc, index) => (
-          <motion.div
-            key={loc.id}
-            initial={{ opacity: 0, scale: 0.92, y: 10 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.88, y: -8 }}
-            transition={{ duration: 0.2, delay: index * 0.04 }}
-            onHoverStart={() => setSelectedIndex(index)}
-            onHoverEnd={() => setSelectedIndex(-1)}
-          >
-            <LocationCard
-              location={loc}
-              onDelete={onDelete}
-              isSelected={selectedIndex === index}
-            />
-          </motion.div>
-        ))}
-      </AnimatePresence>
-    </div>
+    <>
+      <div className="space-y-2">
+        <AnimatePresence initial={false}>
+          {locations.map((loc, index) => (
+            <motion.div
+              key={loc.id}
+              initial={{ opacity: 0, scale: 0.92, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.88, y: -8 }}
+              transition={{ duration: 0.2, delay: index * 0.04 }}
+              onHoverStart={() => setSelectedIndex(index)}
+              onHoverEnd={() => setSelectedIndex(-1)}
+            >
+              <LocationCard
+                location={loc}
+                onDelete={onDelete}
+                onEdit={setEditingLoc}
+                isSelected={selectedIndex === index}
+              />
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </div>
+
+      <EditLocationDialog
+        open={editingLoc !== null}
+        location={editingLoc}
+        onClose={() => setEditingLoc(null)}
+        onSave={onUpdate}
+      />
+    </>
   )
 }

@@ -30,10 +30,15 @@ export function useLocations(planId: string) {
     fetch()
   }
 
+  async function updateLocation(id: string, input: { name: string; url: string; notes?: string }) {
+    await locationsService.update(id, input)
+    fetch()
+  }
+
   async function removeLocation(id: string) {
     await locationsService.remove(id)
     fetch()
   }
 
-  return { locations, loading, addLocation, removeLocation, refetch: fetch }
+  return { locations, loading, addLocation, updateLocation, removeLocation, refetch: fetch }
 }

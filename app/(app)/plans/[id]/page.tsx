@@ -5,32 +5,41 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { usePlan } from '@/hooks/usePlans'
 import { useLocations } from '@/hooks/useLocations'
+import { useAuth } from '@/hooks/useAuth'
 import type { PlanStatus } from '@/types'
-import { formatDate } from '@/types'
+import { formatDate, formatTime, buildCalendarUrl, getDisplayName } from '@/types'
 import PlanStatusBadge from '@/components/features/plans/PlanStatusBadge'
 import PlanForm from '@/components/features/plans/PlanForm'
 import LocationList from '@/components/features/locations/LocationList'
 import AddLocationDialog from '@/components/features/locations/AddLocationDialog'
 import AnimatedContent from '@/components/bits/AnimatedContent'
 import { Button } from '@/components/ui/button'
-import { ArrowLeft, Pencil, Plus, Calendar, Heart, MapPin } from 'lucide-react'
+import { ArrowLeft, Pencil, Plus, Calendar, Clock, CalendarPlus, Heart, MapPin, User } from 'lucide-react'
 
 export default function PlanDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params)
   const router = useRouter()
+  const { user } = useAuth()
 
   const { plan, loading: planLoading, updatePlan, deletePlan } = usePlan(id)
-  const { locations, loading: locsLoading, addLocation, removeLocation } = useLocations(id)
+  const { locations, loading: locsLoading, addLocation, updateLocation, removeLocation } = useLocations(id)
 
-  const [editing, setEditing]         = useState(false)
-  const [showAddLoc, setShowAddLoc]   = useState(false)
+  const [editing, setEditing]       = useState(false)
+  const [showAddLoc, setShowAddLoc] = useState(false)
 
-  async function handleSave(data: { title: string; description: string; planned_date: string; status: PlanStatus }) {
+  function currentDisplayName() {
+    const raw = user?.user_metadata?.display_name || user?.email || ''
+    return getDisplayName(raw)
+  }
+
+  async function handleSave(data: { title: string; description: string; planned_date: string; planned_time: string; status: PlanStatus }) {
     await updatePlan({
-      title:        data.title,
-      description:  data.description || null,
-      planned_date: data.planned_date || null,
-      status:       data.status,
+      title:           data.title,
+      description:     data.description || null,
+      planned_date:    data.planned_date || null,
+      planned_time:    data.planned_time || null,
+      status:          data.status,
+      updated_by_name: currentDisplayName(),
     })
     setEditing(false)
   }
@@ -58,6 +67,8 @@ export default function PlanDetailPage({ params }: { params: Promise<{ id: strin
     )
   }
 
+  const calUrl = buildCalendarUrl(plan)
+
   return (
     <div className="space-y-5">
       {/* Header */}
@@ -67,6 +78,17 @@ export default function PlanDetailPage({ params }: { params: Promise<{ id: strin
             <Link href="/dashboard"><ArrowLeft className="w-4 h-4" /></Link>
           </Button>
           <h1 className="text-xl font-bold text-gray-900 flex-1 truncate">{plan.title}</h1>
+          {calUrl && (
+            <a
+              href={calUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Add to Google Calendar"
+              className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-rose-50 text-gray-400 hover:text-rose-500 transition-colors"
+            >
+              <CalendarPlus className="w-4 h-4" />
+            </a>
+          )}
           <button
             onClick={() => setEditing(!editing)}
             className={`w-8 h-8 flex items-center justify-center rounded-full transition-colors ${editing ? 'bg-rose-100 text-rose-500' : 'hover:bg-gray-100 text-gray-400 hover:text-gray-600'}`}
@@ -96,10 +118,31 @@ export default function PlanDetailPage({ params }: { params: Promise<{ id: strin
                     {formatDate(plan.planned_date)}
                   </span>
                 )}
+                {plan.planned_time && (
+                  <span className="flex items-center gap-1.5 text-sm text-gray-500">
+                    <Clock className="w-3.5 h-3.5 text-rose-400" />
+                    {formatTime(plan.planned_time)}
+                  </span>
+                )}
               </div>
               {plan.description && (
                 <p className="text-gray-600 text-sm leading-relaxed">{plan.description}</p>
               )}
+              {/* Creator / editor attribution */}
+              <div className="flex items-center flex-wrap gap-3 text-xs text-gray-300 pt-1 border-t border-gray-50">
+                {plan.creator_name && (
+                  <span className="flex items-center gap-1">
+                    <User className="w-3 h-3" />
+                    Created by {plan.creator_name}
+                  </span>
+                )}
+                {plan.updated_by_name && (
+                  <span className="flex items-center gap-1">
+                    <Pencil className="w-3 h-3" />
+                    Last edited by {plan.updated_by_name}
+                  </span>
+                )}
+              </div>
             </div>
           )}
         </div>
@@ -134,7 +177,7 @@ export default function PlanDetailPage({ params }: { params: Promise<{ id: strin
               <div className="w-5 h-5 rounded-full border-2 border-rose-200 border-t-rose-500 animate-spin" />
             </div>
           ) : (
-            <LocationList locations={locations} onDelete={removeLocation} />
+            <LocationList locations={locations} onDelete={removeLocation} onUpdate={updateLocation} />
           )}
         </div>
       </AnimatedContent>

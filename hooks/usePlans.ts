@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { createClient } from '@/lib/supabase'
 import { plansService } from '@/services/plans.service'
-import type { DatePlan, PlanStatus } from '@/types'
+import type { DatePlan, UpdatePlanInput } from '@/types'
 
 export function usePlans() {
   const [plans, setPlans]     = useState<DatePlan[]>([])
@@ -54,7 +54,7 @@ export function usePlan(id: string) {
     return () => { supabase.removeChannel(channel) }
   }, [fetch, id])
 
-  async function updatePlan(input: { title: string; description?: string | null; planned_date?: string | null; status: PlanStatus }) {
+  async function updatePlan(input: UpdatePlanInput) {
     await plansService.update(id, input)
     fetch()
   }
