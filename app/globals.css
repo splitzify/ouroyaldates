@@ -27,9 +27,26 @@
 }
 
 @theme inline {
-  --color-background: hsl(var(--background));
-  --color-foreground: hsl(var(--foreground));
-  --font-sans: var(--font-geist-sans);
+  --color-background:             hsl(var(--background));
+  --color-foreground:             hsl(var(--foreground));
+  --color-card:                   hsl(var(--card));
+  --color-card-foreground:        hsl(var(--card-foreground));
+  --color-popover:                hsl(var(--popover));
+  --color-popover-foreground:     hsl(var(--popover-foreground));
+  --color-primary:                hsl(var(--primary));
+  --color-primary-foreground:     hsl(var(--primary-foreground));
+  --color-secondary:              hsl(var(--secondary));
+  --color-secondary-foreground:   hsl(var(--secondary-foreground));
+  --color-muted:                  hsl(var(--muted));
+  --color-muted-foreground:       hsl(var(--muted-foreground));
+  --color-accent:                 hsl(var(--accent));
+  --color-accent-foreground:      hsl(var(--accent-foreground));
+  --color-destructive:            hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border:                 hsl(var(--border));
+  --color-input:                  hsl(var(--input));
+  --color-ring:                   hsl(var(--ring));
+  --font-sans:                    var(--font-geist-sans);
 }
 
 /* ─── Base ───────────────────────────────────────────────────────────────── */
@@ -125,8 +142,24 @@ body {
 .input-style { border-radius: 0.75rem !important; border-color: #e5e7eb !important; transition: border-color 0.15s !important; }
 .input-style:focus { border-color: #f43f5e !important; box-shadow: 0 0 0 3px rgba(244,63,94,0.1) !important; }
 
+/* ─── StarBorder: override dark defaults for light plan cards ────────────── */
+.plan-star-border { display: block !important; }
+.plan-star-border .inner-content {
+  background: white !important;
+  color: inherit !important;
+  padding: 0 !important;
+  text-align: left !important;
+  font-size: inherit !important;
+  border: 1px solid #f3f4f6 !important;
+  border-radius: 1rem !important;
+}
+
 /* ─── App shell ──────────────────────────────────────────────────────────── */
-.app-shell { min-height: 100svh; background: linear-gradient(160deg, #fff5f5 0%, #fff 40%, #f9fafb 100%); }
+.app-shell {
+  min-height: 100svh;
+  background: linear-gradient(160deg, #fff5f5 0%, #fff 40%, #f9fafb 100%);
+  padding-bottom: env(safe-area-inset-bottom);
+}
 
 /* ─── Scrollbar ──────────────────────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 4px; height: 4px; }

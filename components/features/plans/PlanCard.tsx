@@ -22,7 +22,7 @@ export default function PlanCard({ plan, index = 0 }: Props) {
         color={STATUS_STAR_COLORS[plan.status]}
         speed="8s"
         thickness={1}
-        className="rounded-2xl w-full"
+        className="plan-star-border rounded-2xl w-full"
       >
         <Link
           href={`/plans/${plan.id}`}

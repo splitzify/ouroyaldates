@@ -16,8 +16,8 @@ export default function AppNav() {
   const displayName = rawName ? getDisplayName(rawName) : null
 
   return (
-    <header className="bg-white/80 backdrop-blur-md border-b border-rose-100 sticky top-0 z-10">
-      <div className="max-w-2xl mx-auto px-4 h-14 flex items-center justify-between">
+    <header className="bg-white/80 backdrop-blur-md border-b border-rose-100 sticky top-0 z-10" style={{ paddingTop: 'env(safe-area-inset-top)' }}>
+      <div className="max-w-2xl mx-auto px-3 sm:px-4 h-14 flex items-center justify-between">
         <Link href="/dashboard" className="flex items-center gap-2 font-bold text-rose-600 tracking-tight">
           <Heart className="w-5 h-5 fill-rose-500 text-rose-500" />
           <span>Our Dates</span>
@@ -25,7 +25,7 @@ export default function AppNav() {
 
         <div className="flex items-center gap-2">
           {displayName && (
-            <span className="hidden sm:block text-xs text-gray-400 font-medium px-1">{displayName}</span>
+            <span className="text-xs text-gray-400 font-medium px-1 max-w-[6rem] truncate">{displayName}</span>
           )}
           {isHome && (
             <Button asChild size="sm" className="btn-primary gap-1.5 h-8 px-3 text-xs font-semibold">
