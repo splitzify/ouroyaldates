@@ -151,6 +151,14 @@ html, body { height: 100%; }
 .input-style { border-radius: 0.75rem !important; border-color: #e5e7eb !important; transition: border-color 0.15s !important; }
 .input-style:focus { border-color: #f43f5e !important; box-shadow: 0 0 0 3px rgba(244,63,94,0.1) !important; }
 
+/* iOS date/time inputs have a browser default min-width that overflows containers */
+input[type="date"],
+input[type="time"] {
+  min-width: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
 /* ─── StarBorder: override dark defaults for light plan cards ────────────── */
 .plan-star-border { display: block !important; }
 .plan-star-border .inner-content {
