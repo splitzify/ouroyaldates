@@ -63,17 +63,18 @@ body {
 html, body { height: 100%; }
 
 .auth-page {
-  position: relative;
-  height: 100dvh;
-  min-height: 100dvh;
+  /* fixed + inset:0 locks the page to the viewport — no body scroll/overscroll */
+  position: fixed;
+  inset: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  /* respect status bar + home indicator on every phone */
+  /* pull content above geometric center on tall phones */
+  padding-bottom: 15vh;
+  /* respect notch + home indicator */
   padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .auth-page .liquidChrome-container {
@@ -96,8 +97,6 @@ html, body { height: 100%; }
   width: 100%;
   max-width: 26rem;
   padding: clamp(1rem, 4vw, 1.75rem);
-  /* shift slightly above geometric center — looks natural on tall phones */
-  margin-bottom: 8vh;
 }
 
 /* ─── Glassmorphism card ─────────────────────────────────────────────────── */
