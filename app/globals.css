@@ -60,9 +60,12 @@ body {
 }
 
 /* ─── Auth page with LiquidChrome ───────────────────────────────────────── */
+html, body { height: 100%; }
+
 .auth-page {
   position: relative;
-  min-height: 100svh;
+  height: 100dvh;           /* dvh = dynamic viewport — fills exact screen on iOS PWA */
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -80,6 +83,7 @@ body {
 .auth-page .liquidChrome-container canvas {
   width: 100% !important;
   height: 100% !important;
+  display: block;
 }
 
 .auth-content {

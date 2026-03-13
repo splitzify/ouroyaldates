@@ -74,7 +74,7 @@ export default function PlanForm({ plan, onSave, onCancel, onDelete, submitLabel
       </AnimatedContent>
 
       <AnimatedContent distance={20} direction="vertical" duration={0.4} delay={0.1}>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
               <Label htmlFor="date" className="label-style">Date</Label>
