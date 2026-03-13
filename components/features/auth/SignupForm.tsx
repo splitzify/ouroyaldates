@@ -38,7 +38,7 @@ export default function SignupForm() {
       </AnimatedContent>
 
       <AnimatedContent distance={30} direction="vertical" duration={0.6} delay={0.2}>
-        <form onSubmit={handleSubmit} className="glass-card space-y-5 p-7 rounded-2xl">
+        <form onSubmit={handleSubmit} className="glass-card space-y-5 p-5 sm:p-7 rounded-2xl">
           {error && (
             <p className="text-sm text-red-400 bg-red-950/40 border border-red-800/30 rounded-xl p-3 text-center">
               {error}

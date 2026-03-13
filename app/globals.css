@@ -64,12 +64,16 @@ html, body { height: 100%; }
 
 .auth-page {
   position: relative;
-  height: 100dvh;           /* dvh = dynamic viewport — fills exact screen on iOS PWA */
+  height: 100dvh;
   min-height: 100dvh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  /* respect status bar + home indicator on every phone */
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .auth-page .liquidChrome-container {
@@ -90,8 +94,10 @@ html, body { height: 100%; }
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 24rem;
-  padding: 1.5rem;
+  max-width: 26rem;
+  padding: clamp(1rem, 4vw, 1.75rem);
+  /* shift slightly above geometric center — looks natural on tall phones */
+  margin-bottom: 8vh;
 }
 
 /* ─── Glassmorphism card ─────────────────────────────────────────────────── */
