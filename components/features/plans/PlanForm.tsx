@@ -76,7 +76,14 @@ export default function PlanForm({ plan, onSave, onCancel, onDelete, submitLabel
       <AnimatedContent distance={20} direction="vertical" duration={0.4} delay={0.1}>
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-1.5">
-            <Label htmlFor="date" className="label-style">Date</Label>
+            <div className="flex items-center justify-between">
+              <Label htmlFor="date" className="label-style">Date</Label>
+              {date && (
+                <button type="button" onClick={() => setDate('')} className="text-xs text-gray-400 hover:text-rose-500 transition-colors leading-none">
+                  clear
+                </button>
+              )}
+            </div>
             <Input
               id="date"
               type="date"
@@ -86,7 +93,14 @@ export default function PlanForm({ plan, onSave, onCancel, onDelete, submitLabel
             />
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="time" className="label-style">Time</Label>
+            <div className="flex items-center justify-between">
+              <Label htmlFor="time" className="label-style">Time</Label>
+              {time && (
+                <button type="button" onClick={() => setTime('')} className="text-xs text-gray-400 hover:text-rose-500 transition-colors leading-none">
+                  clear
+                </button>
+              )}
+            </div>
             <Input
               id="time"
               type="time"
