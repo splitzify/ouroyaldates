@@ -74,41 +74,42 @@ export default function PlanForm({ plan, onSave, onCancel, onDelete, submitLabel
       </AnimatedContent>
 
       <AnimatedContent distance={20} direction="vertical" duration={0.4} delay={0.1}>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div className="space-y-1.5">
-            <div className="flex items-center justify-between">
-              <Label htmlFor="date" className="label-style">Date</Label>
-              {date && (
-                <button type="button" onClick={() => setDate('')} className="text-xs text-gray-400 hover:text-rose-500 transition-colors leading-none">
-                  clear
-                </button>
-              )}
-            </div>
-            <Input
-              id="date"
-              type="date"
-              value={date}
-              onChange={e => setDate(e.target.value)}
-              className="input-style"
-            />
+        <div className="space-y-1.5">
+          <div className="flex items-center justify-between">
+            <Label htmlFor="date" className="label-style">Date</Label>
+            {date && (
+              <button type="button" onClick={() => setDate('')} className="text-xs text-gray-400 hover:text-rose-500 transition-colors leading-none">
+                clear
+              </button>
+            )}
           </div>
-          <div className="space-y-1.5">
-            <div className="flex items-center justify-between">
-              <Label htmlFor="time" className="label-style">Time</Label>
-              {time && (
-                <button type="button" onClick={() => setTime('')} className="text-xs text-gray-400 hover:text-rose-500 transition-colors leading-none">
-                  clear
-                </button>
-              )}
-            </div>
-            <Input
-              id="time"
-              type="time"
-              value={time}
-              onChange={e => setTime(e.target.value)}
-              className="input-style"
-            />
+          <Input
+            id="date"
+            type="date"
+            value={date}
+            onChange={e => setDate(e.target.value)}
+            className="input-style"
+          />
+        </div>
+      </AnimatedContent>
+
+      <AnimatedContent distance={20} direction="vertical" duration={0.4} delay={0.11}>
+        <div className="space-y-1.5">
+          <div className="flex items-center justify-between">
+            <Label htmlFor="time" className="label-style">Time</Label>
+            {time && (
+              <button type="button" onClick={() => setTime('')} className="text-xs text-gray-400 hover:text-rose-500 transition-colors leading-none">
+                clear
+              </button>
+            )}
           </div>
+          <Input
+            id="time"
+            type="time"
+            value={time}
+            onChange={e => setTime(e.target.value)}
+            className="input-style"
+          />
         </div>
       </AnimatedContent>
 
