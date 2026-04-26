@@ -182,3 +182,292 @@ input[type="time"] {
 ::-webkit-scrollbar { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #fda4af; border-radius: 2px; }
+
+/* ─── Theme switcher (base / light) ──────────────────────────────────────── */
+.theme-switcher {
+  background: rgba(255, 255, 255, 0.6);
+  border-color: #fecdd3;
+  backdrop-filter: blur(6px);
+}
+.theme-switcher-btn { color: #9ca3af; }
+.theme-switcher-btn:hover { color: #f43f5e; background: rgba(244, 63, 94, 0.08); }
+.theme-switcher-btn.is-active { background: #f43f5e; color: white; }
+
+/* ════════════════════════════════════════════════════════════════════════════
+   DARK THEME
+   ════════════════════════════════════════════════════════════════════════════ */
+[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+[data-theme="dark"] body { background: #0f0f12; color: #e5e7eb; }
+
+[data-theme="dark"] .app-shell {
+  background: linear-gradient(160deg, #1a0f14 0%, #0f0f12 40%, #0b0b10 100%);
+}
+
+/* Nav header */
+[data-theme="dark"] header.bg-white\/80 {
+  background: rgba(20, 20, 26, 0.85) !important;
+  border-color: #2a1a22 !important;
+}
+[data-theme="dark"] .text-rose-600 { color: #fb7185 !important; }
+[data-theme="dark"] .text-rose-500 { color: #fb7185 !important; }
+[data-theme="dark"] .text-rose-400 { color: #f87171 !important; }
+[data-theme="dark"] .text-gray-900 { color: #f3f4f6 !important; }
+[data-theme="dark"] .text-gray-800 { color: #e5e7eb !important; }
+[data-theme="dark"] .text-gray-700 { color: #d1d5db !important; }
+[data-theme="dark"] .text-gray-600 { color: #cbd5e1 !important; }
+[data-theme="dark"] .text-gray-500 { color: #9ca3af !important; }
+[data-theme="dark"] .text-gray-400 { color: #8a8f99 !important; }
+[data-theme="dark"] .text-gray-300 { color: #6b7280 !important; }
+
+/* Cards & containers */
+[data-theme="dark"] .bg-white {
+  background: #18181f !important;
+}
+[data-theme="dark"] .bg-white\/80 { background: rgba(24, 24, 31, 0.85) !important; }
+[data-theme="dark"] .border-gray-100 { border-color: #2a2a33 !important; }
+[data-theme="dark"] .border-gray-200 { border-color: #2a2a33 !important; }
+[data-theme="dark"] .border-rose-100 { border-color: #3a1a25 !important; }
+[data-theme="dark"] .border-rose-200 { border-color: #6e1d33 !important; }
+[data-theme="dark"] .border-t.border-gray-50 { border-color: #23232b !important; }
+
+/* Plan card star border */
+[data-theme="dark"] .plan-star-border .inner-content {
+  background: #18181f !important;
+  border: 1px solid #2a2a33 !important;
+  color: #e5e7eb !important;
+}
+
+/* Hover/focus surfaces */
+[data-theme="dark"] .hover\:bg-rose-50:hover { background: rgba(244, 63, 94, 0.12) !important; }
+[data-theme="dark"] .bg-rose-50 { background: rgba(244, 63, 94, 0.12) !important; }
+[data-theme="dark"] .hover\:bg-gray-100:hover { background: #23232b !important; }
+[data-theme="dark"] .bg-gray-100 { background: #23232b !important; color: #cbd5e1 !important; }
+[data-theme="dark"] .bg-gray-50 { background: #14141a !important; }
+
+/* Filter pills */
+[data-theme="dark"] .theme-switcher {
+  background: rgba(30, 30, 38, 0.7);
+  border-color: #3a1a25;
+}
+[data-theme="dark"] .theme-switcher-btn { color: #9ca3af; }
+[data-theme="dark"] .theme-switcher-btn:hover { color: #fb7185; background: rgba(251, 113, 133, 0.12); }
+[data-theme="dark"] .theme-switcher-btn.is-active { background: #fb7185; color: #18181f; }
+
+/* App shell scrollbar */
+[data-theme="dark"] ::-webkit-scrollbar-thumb { background: #6e1d33; }
+
+/* Status badges — slightly punchier in dark */
+[data-theme="dark"] .bg-purple-100 { background: rgba(168, 85, 247, 0.18) !important; }
+[data-theme="dark"] .text-purple-700 { color: #d8b4fe !important; }
+[data-theme="dark"] .border-purple-200 { border-color: rgba(168, 85, 247, 0.4) !important; }
+[data-theme="dark"] .bg-amber-100 { background: rgba(234, 179, 8, 0.18) !important; }
+[data-theme="dark"] .text-amber-700 { color: #fde68a !important; }
+[data-theme="dark"] .border-amber-200 { border-color: rgba(234, 179, 8, 0.4) !important; }
+[data-theme="dark"] .bg-blue-100 { background: rgba(59, 130, 246, 0.18) !important; }
+[data-theme="dark"] .text-blue-700 { color: #93c5fd !important; }
+[data-theme="dark"] .border-blue-200 { border-color: rgba(59, 130, 246, 0.4) !important; }
+[data-theme="dark"] .bg-emerald-100 { background: rgba(16, 185, 129, 0.18) !important; }
+[data-theme="dark"] .text-emerald-700 { color: #6ee7b7 !important; }
+[data-theme="dark"] .border-emerald-200 { border-color: rgba(16, 185, 129, 0.4) !important; }
+
+/* Inputs in dark */
+[data-theme="dark"] .input-style {
+  background: #1f1f27 !important;
+  color: #e5e7eb !important;
+  border-color: #2a2a33 !important;
+}
+[data-theme="dark"] .input-style:focus {
+  border-color: #fb7185 !important;
+  box-shadow: 0 0 0 3px rgba(251, 113, 133, 0.18) !important;
+}
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder { color: #6b7280 !important; }
+
+/* ════════════════════════════════════════════════════════════════════════════
+   MEDIEVAL THEME — stone, brick, parchment, with poppy contrast
+   ════════════════════════════════════════════════════════════════════════════ */
+[data-theme="medieval"] {
+  color-scheme: light;
+  --med-stone-1: #d6cdb8;
+  --med-stone-2: #b8ad94;
+  --med-mortar: #6f6450;
+  --med-parchment: #f6ecd2;
+  --med-parchment-deep: #ebdfbc;
+  --med-ink: #2d1b0e;
+  --med-ink-soft: #5a3a22;
+  --med-burgundy: #8b1a2b;
+  --med-burgundy-deep: #6b1322;
+  --med-gold: #b8860b;
+  --med-emerald: #2f6e3f;
+}
+
+[data-theme="medieval"] body {
+  color: var(--med-ink);
+  font-family: 'Cinzel', 'Trajan Pro', 'Cormorant Garamond', Georgia, serif;
+}
+
+[data-theme="medieval"] .app-shell {
+  background:
+    /* mortar grid (the "brick" lines) */
+    linear-gradient(transparent 95%, rgba(60, 45, 30, 0.35) 95%) 0 0 / 100% 36px,
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 96px,
+      rgba(60, 45, 30, 0.35) 96px 100px
+    ) 0 0 / 200px 72px,
+    /* offset every other row for brick pattern */
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 96px,
+      rgba(60, 45, 30, 0.35) 96px 100px
+    ) 100px 36px / 200px 72px,
+    /* stone color base with mottling */
+    radial-gradient(circle at 20% 20%, rgba(0,0,0,0.10), transparent 40%),
+    radial-gradient(circle at 80% 60%, rgba(0,0,0,0.08), transparent 45%),
+    linear-gradient(180deg, var(--med-stone-1), var(--med-stone-2));
+}
+
+/* Header — heavy stone bar with iron banding */
+[data-theme="medieval"] header.bg-white\/80 {
+  background:
+    linear-gradient(180deg, rgba(80, 60, 40, 0.18), rgba(40, 25, 15, 0.28)),
+    linear-gradient(180deg, var(--med-stone-1), var(--med-stone-2)) !important;
+  border-bottom: 3px double var(--med-burgundy-deep) !important;
+  box-shadow: 0 2px 0 rgba(0,0,0,0.15);
+}
+
+/* Logo / brand text */
+[data-theme="medieval"] .text-rose-600 { color: var(--med-burgundy) !important; }
+[data-theme="medieval"] .text-rose-500 { color: var(--med-burgundy) !important; }
+[data-theme="medieval"] .text-rose-400 { color: var(--med-gold) !important; }
+[data-theme="medieval"] .fill-rose-500 { fill: var(--med-burgundy) !important; }
+[data-theme="medieval"] .fill-rose-300 { fill: var(--med-burgundy) !important; }
+[data-theme="medieval"] .fill-rose-200 { fill: var(--med-gold) !important; }
+[data-theme="medieval"] .text-rose-300 { color: var(--med-gold) !important; }
+
+/* Body text — readable warm ink on parchment */
+[data-theme="medieval"] .text-gray-900 { color: var(--med-ink) !important; font-weight: 700; }
+[data-theme="medieval"] .text-gray-800 { color: var(--med-ink) !important; }
+[data-theme="medieval"] .text-gray-700 { color: var(--med-ink-soft) !important; }
+[data-theme="medieval"] .text-gray-600 { color: var(--med-ink-soft) !important; }
+[data-theme="medieval"] .text-gray-500 { color: var(--med-ink-soft) !important; }
+[data-theme="medieval"] .text-gray-400 { color: #7a5a3e !important; }
+[data-theme="medieval"] .text-gray-300 { color: #8a6a48 !important; }
+
+/* Cards — parchment scrolls with deckled border */
+[data-theme="medieval"] .bg-white {
+  background:
+    radial-gradient(circle at 0% 0%, rgba(140, 90, 40, 0.12), transparent 35%),
+    radial-gradient(circle at 100% 100%, rgba(140, 90, 40, 0.10), transparent 40%),
+    linear-gradient(180deg, var(--med-parchment), var(--med-parchment-deep)) !important;
+  border: 2px solid var(--med-burgundy-deep) !important;
+  box-shadow:
+    0 0 0 1px var(--med-gold) inset,
+    0 6px 16px rgba(40, 25, 10, 0.25) !important;
+}
+
+[data-theme="medieval"] .bg-white\/80 {
+  background:
+    linear-gradient(180deg, rgba(246, 236, 210, 0.92), rgba(235, 223, 188, 0.92)) !important;
+}
+
+/* Plan card star border — make inner card parchment */
+[data-theme="medieval"] .plan-star-border .inner-content {
+  background:
+    radial-gradient(circle at 0% 0%, rgba(140, 90, 40, 0.12), transparent 35%),
+    linear-gradient(180deg, var(--med-parchment), var(--med-parchment-deep)) !important;
+  border: 2px solid var(--med-burgundy-deep) !important;
+  box-shadow: 0 0 0 1px var(--med-gold) inset;
+  color: var(--med-ink) !important;
+}
+
+/* Borders */
+[data-theme="medieval"] .border-gray-100,
+[data-theme="medieval"] .border-gray-200 { border-color: var(--med-burgundy-deep) !important; }
+[data-theme="medieval"] .border-rose-100,
+[data-theme="medieval"] .border-rose-200 { border-color: var(--med-gold) !important; }
+
+/* Hover surfaces */
+[data-theme="medieval"] .bg-rose-50,
+[data-theme="medieval"] .hover\:bg-rose-50:hover {
+  background: rgba(184, 134, 11, 0.18) !important;
+}
+[data-theme="medieval"] .bg-gray-100 { background: rgba(45, 27, 14, 0.10) !important; color: var(--med-ink) !important; }
+[data-theme="medieval"] .hover\:bg-gray-100:hover { background: rgba(45, 27, 14, 0.10) !important; }
+[data-theme="medieval"] .bg-gray-50 { background: var(--med-parchment-deep) !important; }
+
+/* Filter pills (active state) */
+[data-theme="medieval"] .bg-rose-500 {
+  background: var(--med-burgundy) !important;
+  color: var(--med-parchment) !important;
+}
+[data-theme="medieval"] .shadow-rose-200 { box-shadow: 0 2px 0 var(--med-burgundy-deep) !important; }
+
+/* Buttons — gilded */
+[data-theme="medieval"] .btn-primary {
+  background: linear-gradient(180deg, #a8231a, var(--med-burgundy-deep)) !important;
+  color: var(--med-parchment) !important;
+  border: 2px solid var(--med-gold) !important;
+  border-radius: 0.5rem !important;
+  letter-spacing: 0.02em;
+  box-shadow:
+    0 0 0 1px var(--med-burgundy-deep) inset,
+    0 3px 0 var(--med-burgundy-deep),
+    0 6px 12px rgba(40, 15, 10, 0.4) !important;
+}
+[data-theme="medieval"] .btn-primary:hover:not(:disabled) {
+  background: linear-gradient(180deg, #c52a20, #8a1a28) !important;
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 0 1px var(--med-gold) inset,
+    0 4px 0 var(--med-burgundy-deep),
+    0 8px 16px rgba(40, 15, 10, 0.5) !important;
+}
+
+/* Status badges — heraldic */
+[data-theme="medieval"] .bg-purple-100 { background: rgba(88, 28, 135, 0.18) !important; }
+[data-theme="medieval"] .text-purple-700 { color: #4c1d95 !important; font-weight: 700; }
+[data-theme="medieval"] .border-purple-200 { border-color: #6d28d9 !important; }
+[data-theme="medieval"] .bg-amber-100 { background: rgba(184, 134, 11, 0.22) !important; }
+[data-theme="medieval"] .text-amber-700 { color: #7a4a06 !important; font-weight: 700; }
+[data-theme="medieval"] .border-amber-200 { border-color: var(--med-gold) !important; }
+[data-theme="medieval"] .bg-blue-100 { background: rgba(30, 64, 175, 0.18) !important; }
+[data-theme="medieval"] .text-blue-700 { color: #1e3a8a !important; font-weight: 700; }
+[data-theme="medieval"] .border-blue-200 { border-color: #1e40af !important; }
+[data-theme="medieval"] .bg-emerald-100 { background: rgba(47, 110, 63, 0.22) !important; }
+[data-theme="medieval"] .text-emerald-700 { color: #14532d !important; font-weight: 700; }
+[data-theme="medieval"] .border-emerald-200 { border-color: var(--med-emerald) !important; }
+
+/* Inputs — parchment fields */
+[data-theme="medieval"] .input-style {
+  background: var(--med-parchment) !important;
+  color: var(--med-ink) !important;
+  border: 2px solid var(--med-burgundy-deep) !important;
+  border-radius: 0.5rem !important;
+}
+[data-theme="medieval"] .input-style:focus {
+  border-color: var(--med-gold) !important;
+  box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.25) !important;
+}
+[data-theme="medieval"] input::placeholder,
+[data-theme="medieval"] textarea::placeholder { color: #8a6a48 !important; }
+
+/* Theme switcher chrome in medieval */
+[data-theme="medieval"] .theme-switcher {
+  background: linear-gradient(180deg, var(--med-parchment), var(--med-parchment-deep));
+  border: 2px solid var(--med-burgundy-deep);
+  box-shadow: 0 0 0 1px var(--med-gold) inset;
+}
+[data-theme="medieval"] .theme-switcher-btn { color: var(--med-ink-soft); }
+[data-theme="medieval"] .theme-switcher-btn:hover { color: var(--med-burgundy); background: rgba(184, 134, 11, 0.18); }
+[data-theme="medieval"] .theme-switcher-btn.is-active {
+  background: var(--med-burgundy);
+  color: var(--med-parchment);
+  box-shadow: 0 0 0 1px var(--med-gold) inset;
+}
+
+/* Scrollbar */
+[data-theme="medieval"] ::-webkit-scrollbar-thumb { background: var(--med-burgundy); }

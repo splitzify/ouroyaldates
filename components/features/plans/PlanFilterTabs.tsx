@@ -7,6 +7,7 @@ type FilterValue = PlanStatus | 'all'
 const FILTERS: { label: string; value: FilterValue; emoji: string }[] = [
   { label: 'All',      value: 'all',      emoji: '✨' },
   { label: 'Wishlist', value: 'wishlist',  emoji: '💜' },
+  { label: 'Pending',  value: 'pending',   emoji: '💛' },
   { label: 'Planned',  value: 'planned',   emoji: '💙' },
   { label: 'Done',     value: 'done',      emoji: '💚' },
 ]

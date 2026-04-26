@@ -38,6 +38,11 @@ export default function RootLayout({
       <head>
         <script
           dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('ourdates.theme');if(t==='dark'||t==='medieval'||t==='light'){document.documentElement.setAttribute('data-theme',t);}else{document.documentElement.setAttribute('data-theme','light');}}catch(e){}})();`,
+          }}
+        />
+        <script
+          dangerouslySetInnerHTML={{
             __html: `if ('serviceWorker' in navigator) { navigator.serviceWorker.register('/sw.js'); }`,
           }}
         />

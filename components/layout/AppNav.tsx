@@ -6,6 +6,7 @@ import { useAuth } from '@/hooks/useAuth'
 import { getDisplayName } from '@/types'
 import { Button } from '@/components/ui/button'
 import { Heart, Plus, LogOut } from 'lucide-react'
+import ThemeSwitcher from './ThemeSwitcher'
 
 export default function AppNav() {
   const { user, signOut } = useAuth()
@@ -24,8 +25,9 @@ export default function AppNav() {
         </Link>
 
         <div className="flex items-center gap-2">
+          <ThemeSwitcher />
           {displayName && (
-            <span className="text-xs text-gray-400 font-medium px-1 max-w-[6rem] truncate">{displayName}</span>
+            <span className="text-xs text-gray-400 font-medium px-1 max-w-[6rem] truncate hidden sm:inline">{displayName}</span>
           )}
           {isHome && (
             <Button asChild size="sm" className="btn-primary gap-1.5 h-8 px-3 text-xs font-semibold">

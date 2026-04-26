@@ -25,6 +25,7 @@ export default function DashboardPage() {
   const counts: Record<FilterValue, number> = {
     all:      plans.length,
     wishlist: plans.filter(p => p.status === 'wishlist').length,
+    pending:  plans.filter(p => p.status === 'pending').length,
     planned:  plans.filter(p => p.status === 'planned').length,
     done:     plans.filter(p => p.status === 'done').length,
   }

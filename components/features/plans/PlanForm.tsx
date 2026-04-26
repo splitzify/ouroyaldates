@@ -122,6 +122,7 @@ export default function PlanForm({ plan, onSave, onCancel, onDelete, submitLabel
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="wishlist">💜 Wishlist</SelectItem>
+              <SelectItem value="pending">💛 Pending</SelectItem>
               <SelectItem value="planned">💙 Planned</SelectItem>
               <SelectItem value="done">💚 Done</SelectItem>
             </SelectContent>
