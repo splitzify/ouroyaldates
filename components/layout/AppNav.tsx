@@ -7,6 +7,7 @@ import { getDisplayName } from '@/types'
 import { Button } from '@/components/ui/button'
 import { Heart, Plus, LogOut } from 'lucide-react'
 import ThemeSwitcher from './ThemeSwitcher'
+import NotificationToggle from './NotificationToggle'
 
 export default function AppNav() {
   const { user, signOut } = useAuth()
@@ -26,6 +27,7 @@ export default function AppNav() {
 
         <div className="flex items-center gap-2">
           <ThemeSwitcher />
+          <NotificationToggle />
           {displayName && (
             <span className="text-xs text-gray-400 font-medium px-1 max-w-[6rem] truncate hidden sm:inline">{displayName}</span>
           )}

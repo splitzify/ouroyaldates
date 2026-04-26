@@ -81,16 +81,18 @@ export default function PlanCard({ plan, index = 0 }: Props) {
 
             <div className="flex flex-col items-end gap-2 flex-shrink-0">
               {calUrl && (
-                <a
-                  href={calUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={e => e.stopPropagation()}
+                <button
+                  type="button"
+                  onClick={e => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    window.open(calUrl, '_blank', 'noopener,noreferrer')
+                  }}
                   title="Add to Google Calendar"
                   className="text-gray-300 hover:text-rose-400 transition-colors p-1 rounded-lg hover:bg-rose-50"
                 >
                   <CalendarPlus className="w-4 h-4" />
-                </a>
+                </button>
               )}
               <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-rose-400 transition-colors" />
             </div>

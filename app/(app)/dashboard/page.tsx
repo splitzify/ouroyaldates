@@ -43,19 +43,19 @@ export default function DashboardPage() {
   return (
     <div className="space-y-5">
       <AnimatedContent distance={20} direction="vertical" duration={0.5}>
-        <div className="flex items-end justify-between">
-          <div>
-            {displayName && (
-              <p className="text-sm text-rose-400 font-medium mb-0.5">Hi, {displayName} 💕</p>
-            )}
-            <h1 className="text-2xl font-bold text-gray-900">Our dates</h1>
-            <p className="text-sm text-gray-400 mt-0.5">{plans.length} plan{plans.length !== 1 ? 's' : ''} together</p>
-          </div>
+        <div className="text-center">
+          {displayName && (
+            <p className="text-sm text-rose-400 font-medium mb-0.5">Hi, {displayName} 💕</p>
+          )}
+          <h1 className="text-2xl font-bold text-gray-900">Our dates</h1>
+          <p className="text-sm text-gray-400 mt-0.5">{plans.length} plan{plans.length !== 1 ? 's' : ''} together</p>
         </div>
       </AnimatedContent>
 
       <AnimatedContent distance={15} direction="vertical" duration={0.5} delay={0.05}>
-        <PlanFilterTabs active={filter} onChange={setFilter} counts={counts} />
+        <div className="flex justify-center">
+          <PlanFilterTabs active={filter} onChange={setFilter} counts={counts} />
+        </div>
       </AnimatedContent>
 
       {filtered.length === 0 ? (

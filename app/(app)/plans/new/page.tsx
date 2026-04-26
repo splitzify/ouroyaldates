@@ -28,6 +28,26 @@ export default function NewPlanPage() {
       status:       data.status,
       creator_name: creatorName,
     })
+
+    // Fire-and-forget push to the other user
+    const { data: { session } } = await supabase.auth.getSession()
+    if (session) {
+      fetch('/api/push/notify', {
+        method:  'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization:  `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify({
+          title:         `${creatorName} added a new date 💕`,
+          body:          plan.title,
+          url:           `/plans/${plan.id}`,
+          tag:           `plan-${plan.id}`,
+          excludeUserId: user.id,
+        }),
+      }).catch(() => {})
+    }
+
     router.push(`/plans/${plan.id}`)
   }
 
