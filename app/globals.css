@@ -310,14 +310,15 @@ input[type="time"] {
 }
 
 [data-theme="medieval"] .app-shell {
-  background-color: #3a2d1e;
+  background-color: #2a1c10;
   background-image:
     /* soft warm vignette so cards in the center pop */
     radial-gradient(ellipse at 50% 30%, rgba(246, 236, 210, 0.18), transparent 55%),
-    /* cartoon cobblestone tile */
+    /* cartoon cobblestone — irregular polygons, varied sizes */
     url('/medieval-stones.svg');
-  background-size: auto, 240px 160px;
-  background-repeat: no-repeat, repeat;
+  background-size: auto, cover;
+  background-repeat: no-repeat, no-repeat;
+  background-position: center, center;
   background-attachment: fixed, fixed;
 }
 
