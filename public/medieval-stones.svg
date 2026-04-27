@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="160" viewBox="0 0 240 160" preserveAspectRatio="xMidYMid slice">
+  <!-- Mortar / shadow layer -->
+  <rect width="240" height="160" fill="#3a2d1e"/>
+  <rect width="240" height="160" fill="url(#noise)" opacity="0.18"/>
+
+  <defs>
+    <radialGradient id="noise" cx="50%" cy="50%" r="70%">
+      <stop offset="0%"   stop-color="#4a3a26"/>
+      <stop offset="100%" stop-color="#2a2014"/>
+    </radialGradient>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3"/>
+      <feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.18 0"/>
+      <feComposite in2="SourceGraphic" operator="in"/>
+    </filter>
+  </defs>
+
+  <!-- Stones row 1 (3 full stones) — base fill + dark cartoon outline -->
+  <g stroke="#2a1c10" stroke-width="3.5" stroke-linejoin="round">
+    <ellipse cx="40"  cy="42" rx="32" ry="28" fill="#b89a78"/>
+    <ellipse cx="120" cy="40" rx="36" ry="30" fill="#c4a682"/>
+    <ellipse cx="200" cy="44" rx="32" ry="28" fill="#a8907a"/>
+  </g>
+
+  <!-- Stones row 2 (offset, half stones at edges merge across tile seam) -->
+  <g stroke="#2a1c10" stroke-width="3.5" stroke-linejoin="round">
+    <ellipse cx="0"   cy="116" rx="30" ry="28" fill="#b09678"/>
+    <ellipse cx="80"  cy="118" rx="36" ry="30" fill="#a8907a"/>
+    <ellipse cx="160" cy="114" rx="34" ry="30" fill="#bda080"/>
+    <ellipse cx="240" cy="116" rx="30" ry="28" fill="#b09678"/>
+  </g>
+
+  <!-- Cartoon highlights (top-left of each stone) -->
+  <g fill="#f6e6c8" opacity="0.55">
+    <ellipse cx="28"  cy="30" rx="14" ry="5"/>
+    <ellipse cx="106" cy="28" rx="16" ry="5.5"/>
+    <ellipse cx="188" cy="32" rx="14" ry="5"/>
+    <ellipse cx="-10" cy="104" rx="14" ry="5"/>
+    <ellipse cx="66"  cy="106" rx="16" ry="5.5"/>
+    <ellipse cx="146" cy="102" rx="15" ry="5"/>
+    <ellipse cx="230" cy="104" rx="14" ry="5"/>
+  </g>
+
+  <!-- Subtle inner shadow under top edge of each stone -->
+  <g fill="#2a1c10" opacity="0.12">
+    <ellipse cx="40"  cy="58" rx="22" ry="6"/>
+    <ellipse cx="120" cy="56" rx="24" ry="6"/>
+    <ellipse cx="200" cy="60" rx="22" ry="6"/>
+    <ellipse cx="0"   cy="132" rx="22" ry="6"/>
+    <ellipse cx="80"  cy="134" rx="24" ry="6"/>
+    <ellipse cx="160" cy="130" rx="22" ry="6"/>
+    <ellipse cx="240" cy="132" rx="22" ry="6"/>
+  </g>
+
+  <!-- Tiny pebble specks scattered in mortar -->
+  <g fill="#5a4632">
+    <circle cx="78"  cy="78" r="1.5"/>
+    <circle cx="158" cy="78" r="1.5"/>
+    <circle cx="38"  cy="86" r="1.2"/>
+    <circle cx="200" cy="80" r="1.4"/>
+    <circle cx="118" cy="148" r="1.6"/>
+    <circle cx="36"  cy="156" r="1.3"/>
+    <circle cx="200" cy="152" r="1.4"/>
+  </g>
+</svg>

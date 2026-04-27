@@ -310,24 +310,15 @@ input[type="time"] {
 }
 
 [data-theme="medieval"] .app-shell {
-  background:
-    /* mortar grid (the "brick" lines) */
-    linear-gradient(transparent 95%, rgba(60, 45, 30, 0.35) 95%) 0 0 / 100% 36px,
-    repeating-linear-gradient(
-      90deg,
-      transparent 0 96px,
-      rgba(60, 45, 30, 0.35) 96px 100px
-    ) 0 0 / 200px 72px,
-    /* offset every other row for brick pattern */
-    repeating-linear-gradient(
-      90deg,
-      transparent 0 96px,
-      rgba(60, 45, 30, 0.35) 96px 100px
-    ) 100px 36px / 200px 72px,
-    /* stone color base with mottling */
-    radial-gradient(circle at 20% 20%, rgba(0,0,0,0.10), transparent 40%),
-    radial-gradient(circle at 80% 60%, rgba(0,0,0,0.08), transparent 45%),
-    linear-gradient(180deg, var(--med-stone-1), var(--med-stone-2));
+  background-color: #3a2d1e;
+  background-image:
+    /* soft warm vignette so cards in the center pop */
+    radial-gradient(ellipse at 50% 30%, rgba(246, 236, 210, 0.18), transparent 55%),
+    /* cartoon cobblestone tile */
+    url('/medieval-stones.svg');
+  background-size: auto, 240px 160px;
+  background-repeat: no-repeat, repeat;
+  background-attachment: fixed, fixed;
 }
 
 /* Header — heavy stone bar with iron banding */
