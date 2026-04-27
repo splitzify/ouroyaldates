@@ -6,15 +6,16 @@ import Link from 'next/link'
 import { usePlan } from '@/hooks/usePlans'
 import { useLocations } from '@/hooks/useLocations'
 import { useAuth } from '@/hooks/useAuth'
-import type { PlanStatus } from '@/types'
+import type { QuestItem } from '@/types'
 import { formatDate, formatTime, buildCalendarUrl, getDisplayName } from '@/types'
 import PlanStatusBadge from '@/components/features/plans/PlanStatusBadge'
-import PlanForm from '@/components/features/plans/PlanForm'
+import PlanForm, { type PlanFormData } from '@/components/features/plans/PlanForm'
+import QuestList from '@/components/features/plans/QuestList'
 import LocationList from '@/components/features/locations/LocationList'
 import AddLocationDialog from '@/components/features/locations/AddLocationDialog'
 import AnimatedContent from '@/components/bits/AnimatedContent'
 import { Button } from '@/components/ui/button'
-import { ArrowLeft, Pencil, Plus, Calendar, Clock, CalendarPlus, Heart, MapPin, User } from 'lucide-react'
+import { ArrowLeft, Pencil, Plus, Calendar, Clock, CalendarPlus, Heart, MapPin, User, ScrollText, Swords, Gem } from 'lucide-react'
 
 export default function PlanDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params)
@@ -32,16 +33,26 @@ export default function PlanDetailPage({ params }: { params: Promise<{ id: strin
     return getDisplayName(raw)
   }
 
-  async function handleSave(data: { title: string; description: string; planned_date: string; planned_time: string; status: PlanStatus }) {
+  async function handleSave(data: PlanFormData) {
     await updatePlan({
       title:           data.title,
       description:     data.description || null,
       planned_date:    data.planned_date || null,
       planned_time:    data.planned_time || null,
       status:          data.status,
+      objective:       data.objective || null,
+      side_quests:     data.side_quests,
+      trinkets:        data.trinkets,
       updated_by_name: currentDisplayName(),
     })
     setEditing(false)
+  }
+
+  async function updateQuests(field: 'side_quests' | 'trinkets', items: QuestItem[]) {
+    await updatePlan({
+      [field]:         items,
+      updated_by_name: currentDisplayName(),
+    })
   }
 
   async function handleDelete() {
@@ -147,6 +158,57 @@ export default function PlanDetailPage({ params }: { params: Promise<{ id: strin
           )}
         </div>
       </AnimatedContent>
+
+      {/* Royal Decree (objective) */}
+      {!editing && plan.objective && (
+        <AnimatedContent distance={20} direction="vertical" duration={0.4} delay={0.08}>
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-2">
+            <div className="flex items-center gap-2">
+              <ScrollText className="w-4 h-4 text-rose-400" />
+              <h2 className="font-semibold text-gray-800">Royal decree</h2>
+            </div>
+            <p className="text-sm text-gray-600 leading-relaxed whitespace-pre-wrap">{plan.objective}</p>
+          </div>
+        </AnimatedContent>
+      )}
+
+      {/* Side quests */}
+      {!editing && plan.side_quests.length > 0 && (
+        <AnimatedContent distance={20} direction="vertical" duration={0.4} delay={0.09}>
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-3">
+            <div className="flex items-center gap-2">
+              <Swords className="w-4 h-4 text-rose-400" />
+              <h2 className="font-semibold text-gray-800">Side quests</h2>
+              <span className="text-xs text-gray-400 bg-gray-100 rounded-full px-2 py-0.5">
+                {plan.side_quests.filter(q => q.done).length}/{plan.side_quests.length}
+              </span>
+            </div>
+            <QuestList
+              items={plan.side_quests}
+              onChange={items => updateQuests('side_quests', items)}
+            />
+          </div>
+        </AnimatedContent>
+      )}
+
+      {/* Trinkets */}
+      {!editing && plan.trinkets.length > 0 && (
+        <AnimatedContent distance={20} direction="vertical" duration={0.4} delay={0.1}>
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-3">
+            <div className="flex items-center gap-2">
+              <Gem className="w-4 h-4 text-rose-400" />
+              <h2 className="font-semibold text-gray-800">Trinkets &amp; bounty</h2>
+              <span className="text-xs text-gray-400 bg-gray-100 rounded-full px-2 py-0.5">
+                {plan.trinkets.filter(t => t.done).length}/{plan.trinkets.length}
+              </span>
+            </div>
+            <QuestList
+              items={plan.trinkets}
+              onChange={items => updateQuests('trinkets', items)}
+            />
+          </div>
+        </AnimatedContent>
+      )}
 
       {/* Locations */}
       <AnimatedContent distance={20} direction="vertical" duration={0.4} delay={0.1}>

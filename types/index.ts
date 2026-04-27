@@ -3,6 +3,12 @@
 export type PlanStatus = 'wishlist' | 'pending' | 'planned' | 'done'
 export type Platform   = 'maps' | 'instagram' | 'tiktok' | 'yelp' | 'other'
 
+export interface QuestItem {
+  id:   string
+  text: string
+  done: boolean
+}
+
 export interface DatePlan {
   id:               string
   title:            string
@@ -10,6 +16,9 @@ export interface DatePlan {
   planned_date:     string | null
   planned_time:     string | null
   status:           PlanStatus
+  objective:        string | null
+  side_quests:      QuestItem[]
+  trinkets:         QuestItem[]
   created_by:       string
   creator_name:     string | null
   updated_by_name:  string | null
@@ -34,6 +43,9 @@ export interface CreatePlanInput {
   planned_date?:   string
   planned_time?:   string
   status:          PlanStatus
+  objective?:      string
+  side_quests?:    QuestItem[]
+  trinkets?:       QuestItem[]
   created_by:      string
   creator_name?:   string
 }
@@ -44,6 +56,9 @@ export interface UpdatePlanInput {
   planned_date?:    string | null
   planned_time?:    string | null
   status?:          PlanStatus
+  objective?:       string | null
+  side_quests?:     QuestItem[]
+  trinkets?:        QuestItem[]
   updated_by_name?: string | null
 }
 
@@ -117,6 +132,10 @@ export function formatTime(timeStr: string): string {
   const period = h >= 12 ? 'PM' : 'AM'
   const hour12 = h % 12 || 12
   return `${hour12}:${String(m).padStart(2, '0')} ${period}`
+}
+
+export function newQuestItem(text = ''): QuestItem {
+  return { id: typeof crypto !== 'undefined' && 'randomUUID' in crypto ? crypto.randomUUID() : Math.random().toString(36).slice(2), text, done: false }
 }
 
 /** Map a raw display name to the app nickname */
